@@ -7,6 +7,7 @@ public class Main {
 
     public Main() {
         registry = new FirebaseRegistry();
+        System.out.println(registry.getDocs());
     }
 
     public static void main(String[] args) {

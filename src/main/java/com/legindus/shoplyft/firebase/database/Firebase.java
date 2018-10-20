@@ -17,7 +17,7 @@ public class Firebase {
 
     public Firebase() {
         app = FirebaseApp.initializeApp(getOptions());
-        ref = FirebaseDatabase.getInstance().getReference();
+        ref = FirebaseDatabase.getInstance().getReference("categories");
     }
 
     public FirebaseApp getApp() {
