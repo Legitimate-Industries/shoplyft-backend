@@ -34,7 +34,7 @@ public class Firebase {
         try {
             options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.getApplicationDefault())
-                    .setDatabaseUrl("legindus-hacktx-2018.firebaseapp.com")
+                    .setDatabaseUrl("https://legindus-hacktx-2018.firebaseapp.com")
                     .build();
         } catch (IOException e) {
             LOG.error("Error connecting to firebase: ", e);
