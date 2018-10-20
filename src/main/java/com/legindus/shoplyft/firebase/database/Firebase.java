@@ -3,6 +3,8 @@ package com.legindus.shoplyft.firebase;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,11 +13,19 @@ import java.io.IOException;
 public class Firebase {
     private Logger LOG = LoggerFactory.getLogger(Firebase.class);
     private FirebaseApp app;
+    private DatabaseReference ref;
 
     public Firebase() {
         app = FirebaseApp.initializeApp(getOptions());
+        ref = FirebaseDatabase.getInstance().getReference();
+    }
 
-        System.out.println(app.getName());
+    public FirebaseApp getApp() {
+        return app;
+    }
+
+    public DatabaseReference getReference() {
+        return ref;
     }
 
     private FirebaseOptions getOptions() {

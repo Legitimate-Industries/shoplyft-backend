@@ -1,12 +1,12 @@
 package com.legindus.shoplyft;
 
-import com.legindus.shoplyft.firebase.Firebase;
+import com.legindus.shoplyft.firebase.FirebaseRegistry;
 
 public class Main {
-    private Firebase firebase;
+    private FirebaseRegistry registry;
 
     public Main() {
-        firebase = new Firebase();
+        registry = new FirebaseRegistry();
     }
 
     public static void main(String[] args) {
