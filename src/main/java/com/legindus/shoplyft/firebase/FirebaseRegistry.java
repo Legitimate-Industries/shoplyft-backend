@@ -9,12 +9,16 @@ import com.legindus.shoplyftsearch.CategoryDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class FirebaseRegistry {
     private Logger LOG = LoggerFactory.getLogger(FirebaseRegistry.class);
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
     private Firebase firebase;
-    private List<CategoryDocument> docs;
 
     public FirebaseRegistry() {
         firebase = new Firebase();
@@ -22,36 +26,50 @@ public class FirebaseRegistry {
     }
 
     public List<CategoryDocument> getDocs() {
+        Future<List<CategoryDocument>> future = loadDocuments();
+        List<CategoryDocument> docs = new ArrayList<>();
+
+        try {
+            docs = future.get();
+        } catch (Exception e) {
+            LOG.error("Error grabbing documents: ", e);
+        }
+
         return docs;
     }
 
-    private void loadDocuments() {
-        firebase.getReference().orderByChild("name").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
-                CategoryDocument doc = snapshot.getValue(CategoryDocument.class);
-                docs.add(doc);
-            }
+    private Future<List<CategoryDocument>> loadDocuments() {
+        return executor.submit(() -> {
+            List<CategoryDocument> docs = new ArrayList<>();
 
-            @Override
-            public void onChildChanged(DataSnapshot snapshot, String previousChildName) {
+            firebase.getReference().orderByChild("name").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
+                    CategoryDocument document = snapshot.getValue(CategoryDocument.class);
+                }
 
-            }
+                @Override
+                public void onChildChanged(DataSnapshot snapshot, String previousChildName) {
 
-            @Override
-            public void onChildRemoved(DataSnapshot snapshot) {
+                }
 
-            }
+                @Override
+                public void onChildRemoved(DataSnapshot snapshot) {
 
-            @Override
-            public void onChildMoved(DataSnapshot snapshot, String previousChildName) {
+                }
 
-            }
+                @Override
+                public void onChildMoved(DataSnapshot snapshot, String previousChildName) {
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                LOG.error("Firebase error: ", error);
-            }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+
+                }
+            });
+
+            return docs;
         });
     }
 }
