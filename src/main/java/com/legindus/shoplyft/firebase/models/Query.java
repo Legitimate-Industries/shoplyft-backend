@@ -12,6 +12,7 @@ public class Query extends ModelBuilder {
     public String id;
     public String first;
     public String employeeName;
+    public String category = "PLACEHOLDER";
     public List<String> chat;
 
     public Query() {

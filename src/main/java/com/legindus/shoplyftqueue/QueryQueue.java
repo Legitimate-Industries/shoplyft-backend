@@ -26,7 +26,9 @@ public class QueryQueue {
 
     public void addQuery(Query q) {
         List<String> list = index.search(q.first);
-        queueMap.get(list.isEmpty() ? "Other" : list.get(0)).add(q);
+        q.category = list.isEmpty() ? "Other" : list.get(0);
+        Main.registry.updateQuery(q, q.id);
+        queueMap.get(q.category).add(q);
     }
 
     public void claimQuery(String id, Employee employee) throws Exception {
