@@ -130,17 +130,7 @@ public class FirebaseRegistry {
      */
     public void updateQuery(Query newQuery, String id) {
         DatabaseReference r = firebase.getFDatabase().getReference("queries");
-        r.addChildEventListener(new ChildAddedListener() {
-            @Override
-            public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
-                Query q = snapshot.getValue(Query.class);
-
-                if (q.id.equals(id))
-                    r.child(snapshot.getKey()).setValue(newQuery, (a, b) -> {
-                        System.out.println(b);
-                    });
-            }
-        });
+        r.child(id).setValueAsync(newQuery);
     }
 
     /**
