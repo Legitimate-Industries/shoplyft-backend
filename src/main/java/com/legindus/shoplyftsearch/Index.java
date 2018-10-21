@@ -31,7 +31,7 @@ public class Index {
         for(CategoryDocument document : documents) {
             Document doc = new Document();
 
-            doc.add(new TextField("category", document.categoryName, Field.Store.YES));
+            doc.add(new TextField("category", document.name, Field.Store.YES));
             StringBuilder builder = new StringBuilder();
             for(String s : document.keywords) {
                 builder.append(s);
