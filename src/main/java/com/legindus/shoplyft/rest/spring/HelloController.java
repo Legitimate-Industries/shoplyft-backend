@@ -66,7 +66,7 @@ public class HelloController {
                 BufferedReader in = new BufferedReader(new FileReader(f));
                 String it;
                 while((it = in.readLine()) != null) {
-                    builder.append(it);
+                    builder.append(it).append("\n");
                 }
                 userhtml = builder.toString();
             } catch (IOException e) {
@@ -88,7 +88,7 @@ public class HelloController {
                 BufferedReader in = new BufferedReader(new FileReader(f));
                 String it;
                 while((it = in.readLine()) != null) {
-                    builder.append(it);
+                    builder.append(it).append("\n");
                 }
                 userjs = builder.toString();
             } catch (IOException e) {
