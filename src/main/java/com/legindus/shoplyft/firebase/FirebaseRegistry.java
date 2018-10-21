@@ -88,12 +88,13 @@ public class FirebaseRegistry {
      *         If future is interrupted while running
      */
     @Nullable
-    public Query getQuery(String id) throws ExecutionException, InterruptedException {
+    public Query getQuery(long id) throws ExecutionException, InterruptedException {
         CompletableFuture<Query> future = new CompletableFuture<>();
         firebase.getFDatabase().getReference("queries").addChildEventListener(new ChildAddedListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
-                if (snapshot.getKey().equals(id))
+                Query q = snapshot.getValue(Query.class);
+                if (q.id == id)
                     future.complete(snapshot.getValue(Query.class));
             }
         });
@@ -107,11 +108,9 @@ public class FirebaseRegistry {
      *
      * @param query
      *        The User Query to add
-     * @param id
-     *        The specified id of the User Query
      */
-    public void newQuery(Query query, String id) {
-        firebase.getFDatabase().getReference("queries").child(id).setValueAsync(query);
+    public void newQuery(Query query) {
+        firebase.getFDatabase().getReference("queries").push().setValueAsync(query);
     }
 
     /**
@@ -125,18 +124,15 @@ public class FirebaseRegistry {
      * @param id
      *        The id of the User Query to be updated
      */
-    public void updateQuery(Query newQuery, String id) {
+    public void updateQuery(Query newQuery, long id) {
         DatabaseReference r = firebase.getFDatabase().getReference("queries");
-        r.addListenerForSingleValueEvent(new ValueEventListener() {
+        r.addChildEventListener(new ChildAddedListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.hasChild(id))
-                    r.setValueAsync(newQuery);
-            }
+            public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
+                Query q = snapshot.getValue(Query.class);
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                LOG.error("Firebase grab cancelled: ", error);
+                if (q.id == id)
+                    r.child(snapshot.getKey()).setValueAsync(newQuery);
             }
         });
     }
@@ -147,8 +143,16 @@ public class FirebaseRegistry {
      * @param id
      *        The specified User Query id to remove
      */
-    public void removeQuery(String id) {
-        firebase.getFDatabase().getReference("queries").child(id).removeValueAsync();
+    public void removeQuery(long id) {
+        firebase.getFDatabase().getReference("queries").addChildEventListener(new ChildAddedListener() {
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
+                Query q = snapshot.getValue(Query.class);
+
+                if (q.id == id)
+                    firebase.getFDatabase().getReference("queries").child(snapshot.getKey()).removeValueAsync();
+            }
+        });
     }
 
     public Firebase getFirebase() {
