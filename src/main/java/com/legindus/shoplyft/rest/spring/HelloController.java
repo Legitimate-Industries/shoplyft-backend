@@ -45,7 +45,7 @@ public class HelloController {
         FirebaseDatabase db = Main.registry.getFirebase().getFDatabase();
 
         try {
-            Main.queue.claimQuery(queryId, new Employee(21, token));
+            Main.queue.claimQuery(queryId, new Employee(token));
         } catch(Exception e) {
             return "query not claimed";
         }
