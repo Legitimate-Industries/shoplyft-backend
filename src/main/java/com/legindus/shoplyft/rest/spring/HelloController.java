@@ -7,10 +7,10 @@ import com.legindus.shoplyft.firebase.models.Query;
 import com.legindus.shoplyft.firebase.utils.Status;
 import com.legindus.shoplyftqueue.entities.Employee;
 import org.apache.lucene.util.QueryBuilder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.*;
+import java.util.Scanner;
 
 @RestController
 public class HelloController {
@@ -46,13 +46,57 @@ public class HelloController {
 
         try {
             Main.queue.claimQuery(queryId, new Employee(token));
-        } catch(Exception e) {
+        } catch (Exception e) {
             return "query not claimed";
         }
 
 
         return "query claimed";
 
+    }
+
+    static String userhtml = null;
+
+    @GetMapping("/user.html")
+    public String userHtml() {
+        if(userhtml == null) {
+            try {
+                File f = new File("/home/kirbyquerby/shoplyft-vue/user.html");
+                StringBuilder builder = new StringBuilder();
+                BufferedReader in = new BufferedReader(new FileReader(f));
+                String it;
+                while((it = in.readLine()) != null) {
+                    builder.append(it);
+                }
+                userhtml = builder.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "Could not serve file";
+            }
+        }
+        return userhtml;
+    }
+
+    static String userjs = null;
+
+    @GetMapping("/user.js")
+    public String userjs() {
+        if(userjs == null) {
+            try {
+                File f = new File("/home/kirbyquerby/shoplyft-vue/user.js");
+                StringBuilder builder = new StringBuilder();
+                BufferedReader in = new BufferedReader(new FileReader(f));
+                String it;
+                while((it = in.readLine()) != null) {
+                    builder.append(it);
+                }
+                userjs = builder.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "Could not serve file";
+            }
+        }
+        return userhtml;
     }
 
 }
