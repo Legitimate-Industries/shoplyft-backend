@@ -62,8 +62,8 @@ dependencies {
 //    options.encoding = 'UTF-8'
 //}
 //
-//task myRun(type: JavaExec) {
-//    classpath sourceSets.main.runtimeClasspath
-//    main = "com.legindus.shoplyft.Main"
-//    args "arg1", "arg2"
-//}
+task myRun(type: JavaExec) {
+    classpath sourceSets.main.runtimeClasspath
+    main = "com.legindus.shoplyft.Main"
+    args "arg1", "arg2"
+}
