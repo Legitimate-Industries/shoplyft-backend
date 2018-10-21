@@ -55,48 +55,41 @@ public class HelloController {
 
     }
 
-    static String userhtml = null;
 
     @GetMapping("/user.html")
     public String userHtml() {
-        if(userhtml == null || true) {
-            try {
-                File f = new File("/home/kirbyquerby/shoplyft-vue/user.html");
-                StringBuilder builder = new StringBuilder();
-                BufferedReader in = new BufferedReader(new FileReader(f));
-                String it;
-                while((it = in.readLine()) != null) {
-                    builder.append(it).append("\n");
-                }
-                userhtml = builder.toString();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "Could not serve file";
+        try {
+            File f = new File("/home/kirbyquerby/shoplyft-vue/user.html");
+            StringBuilder builder = new StringBuilder();
+            BufferedReader in = new BufferedReader(new FileReader(f));
+            String it;
+            while ((it = in.readLine()) != null) {
+                builder.append(it).append("\n");
             }
+            return builder.toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Could not serve file";
         }
-        return userhtml;
     }
 
-    static String userjs = null;
 
     @GetMapping("/user.js")
     public String userjs() {
-        if(userjs == null || true) {
-            try {
-                File f = new File("/home/kirbyquerby/shoplyft-vue/user.js");
-                StringBuilder builder = new StringBuilder();
-                BufferedReader in = new BufferedReader(new FileReader(f));
-                String it;
-                while((it = in.readLine()) != null) {
-                    builder.append(it).append("\n");
-                }
-                userjs = builder.toString();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "Could not serve file";
+        try {
+            File f = new File("/home/kirbyquerby/shoplyft-vue/user.js");
+            StringBuilder builder = new StringBuilder();
+            BufferedReader in = new BufferedReader(new FileReader(f));
+            String it;
+            while ((it = in.readLine()) != null) {
+                builder.append(it).append("\n");
             }
+            return builder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Could not serve file";
         }
-        return userjs;
     }
 
 }
