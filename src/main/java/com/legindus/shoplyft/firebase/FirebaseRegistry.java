@@ -136,7 +136,9 @@ public class FirebaseRegistry {
                 Query q = snapshot.getValue(Query.class);
 
                 if (q.id.equals(id))
-                    r.child(snapshot.getKey()).setValueAsync(newQuery);
+                    r.child(snapshot.getKey()).setValue(newQuery, (a, b) -> {
+                        System.out.println(b);
+                    });
             }
         });
     }

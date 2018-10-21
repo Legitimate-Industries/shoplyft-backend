@@ -26,10 +26,7 @@ public class QueryQueue {
 
     public void addQuery(Query q) {
         List<String> list = index.search(q.first);
-        System.out.println("QQ" + list);
         q.category = list.isEmpty() ? "Other" : list.get(0);
-        System.out.println("QQ" + q.category);
-        System.out.println("QQ" + q.id);
         Main.registry.updateQuery(q, q.id);
         queueMap.get(q.category).add(q);
     }
