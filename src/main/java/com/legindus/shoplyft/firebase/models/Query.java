@@ -17,32 +17,26 @@ public class Query extends ModelBuilder {
     public Query() {
     }
 
-    public Query(int status, String first, String employeeName, List<String> chat) {
+    public Query(int status, String employeeName, List<String> chat) {
         this.timestamp = System.currentTimeMillis();
         this.status = status;
-        this.first = first;
+        this.first = chat.get(0);
         this.employeeName = employeeName;
         this.chat = chat;
     }
 
     public static class Builder extends ModelBuilder.Builder<Builder, Query> {
         private int status;
-        private String first;
         private String employeeName;
         private List<String> chat = new ArrayList<>();
 
         @Override
         public Query build() {
-            return new Query(status, first, employeeName, chat);
+            return new Query(status, employeeName, chat);
         }
 
         public final Builder setStatus(int status) {
             this.status = status;
-            return this;
-        }
-
-        public final Builder setFirst(String first) {
-            this.first = first;
             return this;
         }
 
