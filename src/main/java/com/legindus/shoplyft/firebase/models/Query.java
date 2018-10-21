@@ -12,7 +12,7 @@ public class Query extends ModelBuilder {
     public String id;
     public String first;
     public String employeeName;
-    public String category = "PLACEHOLDER";
+    public String category;
     public List<String> chat;
 
     public Query() {
@@ -24,6 +24,7 @@ public class Query extends ModelBuilder {
         this.first = chat.get(0);
         this.employeeName = employeeName;
         this.chat = chat;
+        this.category = "PLACEHOLDER";
     }
 
     public static class Builder extends ModelBuilder.Builder<Builder, Query> {
