@@ -1,18 +1,27 @@
 package com.legindus.shoplyft;
 
 import com.legindus.shoplyft.firebase.FirebaseRegistry;
-import com.legindus.shoplyft.rest.RestServer;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-public class Main {
+@SpringBootApplication
+public class Main implements CommandLineRunner {
     private FirebaseRegistry registry;
 
     public Main() {
-        registry = new FirebaseRegistry();
-        System.out.println(registry.getDocs());
+//        registry = new FirebaseRegistry();
+//        System.out.println(registry.getDocs());
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+
     }
 
     public static void main(String[] args) throws Exception {
 //        new Main();
-        new RestServer().start();
+//        new RestServer().start();
+        SpringApplication.run(Main.class);
     }
 }
