@@ -1,6 +1,7 @@
 package com.legindus.shoplyftsearch;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.*;
 import org.apache.lucene.queryparser.classic.ParseException;
@@ -29,7 +30,7 @@ public class Index {
     public IndexSearcher indexSearcher;
 
     public Index(List<CategoryDocument> documents)  {
-        analyser = new StandardAnalyzer();
+        analyser = new EnglishAnalyzer();
 
         try {
             index = new RAMDirectory();
@@ -41,9 +42,10 @@ public class Index {
 
                 doc.add(new TextField("category", document.categoryName, Field.Store.YES));
                 StringBuilder builder = new StringBuilder();
+                builder.append(document.categoryName);
                 for (String s : document.keywords) {
-                    builder.append(s);
                     builder.append(" ");
+                    builder.append(s);
                 }
                 doc.add(new TextField("keywords", builder.toString(), Field.Store.YES));
                 indexWriter.addDocument(doc);
@@ -93,7 +95,7 @@ public class Index {
         };
 
         Index index = new Index(Arrays.asList(docs));
-        System.out.println(index.search("helen apple orange"));
+        System.out.println(index.search(""));
     }
 
 }
