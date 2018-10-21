@@ -34,6 +34,7 @@ public class HelloController {
         String id = Main.registry.newQuery(q);
 
         Main.queue.addQuery(q);
+        System.out.println("HelloController: " + q.category);
 
         return id;
 
