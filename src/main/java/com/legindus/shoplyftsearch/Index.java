@@ -3,7 +3,16 @@ package com.legindus.shoplyftsearch;
 import com.legindus.shoplyft.firebase.models.CategoryDocument;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.LowerCaseFilter;
+import org.apache.lucene.analysis.StopFilter;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.custom.CustomAnalyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.analysis.en.KStemFilter;
+import org.apache.lucene.analysis.snowball.SnowballFilter;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.standard.StandardFilter;
+import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.document.*;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
@@ -13,6 +22,7 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.*;
 import org.apache.lucene.index.*;
+import org.tartarus.snowball.ext.EnglishStemmer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,9 +40,21 @@ public class Index {
     public IndexSearcher indexSearcher;
 
     public Index(List<CategoryDocument> documents)  {
-        analyser = new EnglishAnalyzer();
 
         try {
+            analyser = new Analyzer() {
+                @Override
+                protected TokenStreamComponents createComponents(String fieldName) {
+                    StandardTokenizer src = new StandardTokenizer();
+                    TokenStream result = new StandardFilter(src);
+                    result = new LowerCaseFilter(result);
+                    result = new StopFilter(result, EnglishAnalyzer.getDefaultStopSet());
+                    result = new KStemFilter(result);
+                    //result = new SnowballFilter(result, new EnglishStemmer());
+
+                    return new TokenStreamComponents(src, result);
+                }
+            };
             index = new RAMDirectory();
             //index = FSDirectory.open(Paths.get("/Users/sanjay/Desktop/index"));
             indexWriterConfig = new IndexWriterConfig(analyser);
@@ -90,12 +112,12 @@ public class Index {
 
     public static void main(String[] args) {
         CategoryDocument[] docs = {
-                new CategoryDocument("test1", Arrays.asList("sanjay", "apple", "orange")),
-                new CategoryDocument("test2", Arrays.asList("helen"))
+                new CategoryDocument("sanjay", Arrays.asList("sanjay", "is awesome", "and amazing", "and a really good coder", "intelligent")),
+                new CategoryDocument("helen", Arrays.asList("helen", "is an great violinist", "and is really really smart"))
         };
 
         Index index = new Index(Arrays.asList(docs));
-        System.out.println(index.search(""));
+        System.out.println(index.search("who can code"));
     }
 
 }
