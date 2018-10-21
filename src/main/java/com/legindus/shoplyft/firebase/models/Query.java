@@ -7,9 +7,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Query extends ModelBuilder {
-    public long id;
     public long timestamp;
     public int status;
+    public String id;
     public String first;
     public String employeeName;
     public List<String> chat;
@@ -17,9 +17,8 @@ public class Query extends ModelBuilder {
     public Query() {
     }
 
-    public Query(long id, long timestamp, int status, String first, String employeeName, List<String> chat) {
-        this.id = id;
-        this.timestamp = timestamp;
+    public Query(int status, String first, String employeeName, List<String> chat) {
+        this.timestamp = System.currentTimeMillis();
         this.status = status;
         this.first = first;
         this.employeeName = employeeName;
@@ -27,8 +26,6 @@ public class Query extends ModelBuilder {
     }
 
     public static class Builder extends ModelBuilder.Builder<Builder, Query> {
-        private long id;
-        private long timestamp;
         private int status;
         private String first;
         private String employeeName;
@@ -36,17 +33,7 @@ public class Query extends ModelBuilder {
 
         @Override
         public Query build() {
-            return new Query(id, timestamp, status, first, employeeName, chat);
-        }
-
-        public final Builder setId(long id) {
-            this.id = id;
-            return this;
-        }
-
-        public final Builder setTimestamp(long timestamp) {
-            this.timestamp = timestamp;
-            return this;
+            return new Query(status, first, employeeName, chat);
         }
 
         public final Builder setStatus(int status) {

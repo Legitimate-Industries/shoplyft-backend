@@ -28,36 +28,30 @@ public class QueryQueue {
         queueMap.get(index.search(q.first).get(0)).add(q);
     }
 
-    public void claimQuery(long id, Employee employee) throws Exception {
+    public void claimQuery(String id, Employee employee) throws Exception {
         updateQuery(id, employee);
         for (Queue<Query> queue: queueMap.values())
             for (Query query: queue)
-                if (query.id == id) {
+                if (query.id.equals(id)) {
                     queue.remove(query);
                     break;
                 }
     }
 
-    public void claimQuery(String category, long id, Employee employee) throws Exception{
+    public void claimQuery(String category, String id, Employee employee) throws Exception{
         updateQuery(id, employee);
         for (Query q: queueMap.get(category))
-            if (q.id == id) {
+            if (q.id.equals(id)) {
                 queueMap.get(category).remove(q);
                 break;
             }
     }
 
-    private void updateQuery(long id, Employee employee) throws Exception {
-        Query old = Main.registry.getQuery(id);
+    private void updateQuery(String id, Employee employee) throws Exception {
+        Query q = Main.registry.getQuery(id);
 
-        Query q = new Query.Builder()
-                .setId(id)
-                .setTimestamp(old.timestamp)
-                .setStatus(Status.IN_PROGRESS)
-                .setChat(old.chat.toArray(new String[old.chat.size()]))
-                .setFirst(old.first)
-                .setEmployeeName(employee.name)
-                .build();
+        q.status = Status.IN_PROGRESS;
+        q.employeeName = employee.name;
 
         Main.registry.updateQuery(q, id);
     }

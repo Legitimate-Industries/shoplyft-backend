@@ -6,5 +6,7 @@ gradlew
 gradlew.bat
 shoplyft-backend.iml
 service.json
+build
 
 .DS_Store
+src/main/resources/application.properties
