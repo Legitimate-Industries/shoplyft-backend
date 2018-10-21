@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Main implements CommandLineRunner {
 
-    private FirebaseRegistry registry;
+    public static FirebaseRegistry registry;
 
     public final static Object lock = new Object();
     public static volatile boolean die = false;
