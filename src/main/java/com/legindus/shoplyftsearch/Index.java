@@ -76,7 +76,6 @@ public class Index {
             IndexReader reader = DirectoryReader.open(index);
             for(int i = 0; i < reader.maxDoc(); ++i) {
                 Document doc = reader.document(i);
-                System.out.println("CONTENT " + doc.get("keywords"));
             }
             indexSearcher = new IndexSearcher(reader);
         } catch (IOException e) {
@@ -89,10 +88,8 @@ public class Index {
 
         try {
             Query q = parser.parse(query);
-            System.out.println(q);
             TopDocs hits = indexSearcher.search(q, 10000);
             ScoreDoc[] docs = hits.scoreDocs;
-            System.out.println(hits.totalHits);
             ArrayList<String> list = new ArrayList<>();
             for(ScoreDoc doc: docs) {
                 int docId = doc.doc;
