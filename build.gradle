@@ -39,6 +39,8 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.10.2'
+task myRun(type: JavaExec) {
+    classpath sourceSets.main.runtimeClasspath
+    main = "com.legindus.shoplyft.Main"
+    args "arg1", "arg2"
 }
