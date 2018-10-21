@@ -59,7 +59,7 @@ public class HelloController {
 
     @GetMapping("/user.html")
     public String userHtml() {
-        if(userhtml == null) {
+        if(userhtml == null || true) {
             try {
                 File f = new File("/home/kirbyquerby/shoplyft-vue/user.html");
                 StringBuilder builder = new StringBuilder();
@@ -81,7 +81,7 @@ public class HelloController {
 
     @GetMapping("/user.js")
     public String userjs() {
-        if(userjs == null) {
+        if(userjs == null || true) {
             try {
                 File f = new File("/home/kirbyquerby/shoplyft-vue/user.js");
                 StringBuilder builder = new StringBuilder();
