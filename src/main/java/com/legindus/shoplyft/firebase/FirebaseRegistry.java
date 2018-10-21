@@ -5,18 +5,19 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.legindus.shoplyft.firebase.database.Firebase;
-import com.legindus.shoplyftsearch.CategoryDocument;
+import com.legindus.shoplyft.firebase.models.CategoryDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class FirebaseRegistry {
     private Logger LOG = LoggerFactory.getLogger(FirebaseRegistry.class);
-    private ExecutorService executor = Executors.newSingleThreadExecutor();
     private Firebase firebase;
 
     public FirebaseRegistry() {

@@ -1,8 +1,9 @@
 package com.legindus.shoplyftsearch;
 
+import com.legindus.shoplyft.firebase.models.CategoryDocument;
+
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.*;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
@@ -14,7 +15,6 @@ import org.apache.lucene.store.*;
 import org.apache.lucene.index.*;
 
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,9 +40,9 @@ public class Index {
             for (CategoryDocument document : documents) {
                 Document doc = new Document();
 
-                doc.add(new TextField("category", document.categoryName, Field.Store.YES));
+                doc.add(new TextField("category", document.name, Field.Store.YES));
                 StringBuilder builder = new StringBuilder();
-                builder.append(document.categoryName);
+                builder.append(document.name);
                 for (String s : document.keywords) {
                     builder.append(" ");
                     builder.append(s);
