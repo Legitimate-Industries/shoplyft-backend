@@ -3,6 +3,7 @@ package com.legindus.shoplyftsearch;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.*;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -18,10 +19,10 @@ import java.util.List;
 
 public class Index {
 
-    public Analyzer analyser;
-    public Directory index;
-    public IndexWriterConfig indexWriterConfig;
-    public IndexWriter indexWriter;
+    private Analyzer analyser;
+    private Directory index;
+    private IndexWriterConfig indexWriterConfig;
+    private IndexWriter indexWriter;
 
     public IndexSearcher indexSearcher;
 
@@ -48,27 +49,26 @@ public class Index {
     public List<String> search(String query) throws IOException {
         QueryParser parser = new QueryParser("keywords", analyser);
 
-        Query q = parser.parse(query);
-        System.out.println(q.toString());
-
-        TopDocs hits;
-        ScoreDoc[] docs;
         try {
-            hits = indexSearcher.search(q, 10);
-            docs = hits.scoreDocs;
+            Query q = parser.parse(query);
+            TopDocs hits = indexSearcher.search(q, 10);
+            ScoreDoc[] docs = hits.scoreDocs;
+            ArrayList<String> list = new ArrayList<>();
+            for(ScoreDoc doc: docs) {
+                int docId = doc.doc;
+                Document d = indexSearcher.doc(docId);
+                list.add(d.get("category"));
+            }
+
+            System.out.println(list);
+            return list;
         } catch (IOException e) {
             System.err.println("Search Error in Index::search(): " + e.getMessage());
+        } catch (ParseException e) {
+            System.err.println("Search error in parsing query: " + e.getMessage());
         }
 
-        ArrayList<String> list = new ArrayList<>();
-        for(ScoreDoc doc: docs) {
-            int docId = doc.doc;
-            Document d = indexSearcher.doc(docId);
-            list.add(d.get("category"));
-        }
-
-        System.out.println(list);
-        return list;
+        return null;
     }
 
 }
