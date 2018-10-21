@@ -1,6 +1,7 @@
 package com.legindus.shoplyft;
 
 import com.legindus.shoplyft.firebase.FirebaseRegistry;
+import com.legindus.shoplyft.rest.RestServer;
 
 public class Main {
     private FirebaseRegistry registry;
@@ -10,7 +11,8 @@ public class Main {
         System.out.println(registry.getDocs());
     }
 
-    public static void main(String[] args) {
-        new Main();
+    public static void main(String[] args) throws Exception {
+//        new Main();
+        new RestServer().start();
     }
 }
