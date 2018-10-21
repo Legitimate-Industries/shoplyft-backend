@@ -19,6 +19,13 @@ dependencies {
     compile 'com.google.firebase:firebase-admin:6.5.0'
     compile 'ch.qos.logback:logback-classic:1.2.3'
     compile 'com.typesafe:config:1.3.3'
+
+    // https://mvnrepository.com/artifact/org.apache.lucene/lucene-core
+    compile group: 'org.apache.lucene', name: 'lucene-core', version: '7.5.0'
+    compile group: 'org.apache.lucene', name: 'lucene-queryparser', version: '7.5.0'
+    compile group: 'org.apache.lucene', name: 'lucene-analyzers-common', version: '7.5.0'
+
+
 }
 
 class Version {
