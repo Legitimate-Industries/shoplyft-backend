@@ -24,7 +24,7 @@ public class RestServer {
 
     public void start() throws IOException, GeneralSecurityException {
         // setup the socket address
-        InetSocketAddress address = new InetSocketAddress("127.0.0.1", 443);
+        InetSocketAddress address = new InetSocketAddress("sudoku.kirbyquerby.me", 443);
 
         // initialise the HTTPS server
         HttpServer httpsServer = HttpsServer.create(address, 0);
