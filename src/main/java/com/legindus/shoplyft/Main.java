@@ -7,21 +7,27 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Main implements CommandLineRunner {
+
     private FirebaseRegistry registry;
 
+    public final static Object lock = new Object();
+    public static volatile boolean die = false;
+
     public Main() {
-//        registry = new FirebaseRegistry();
-//        System.out.println(registry.getDocs());
+
     }
 
     @Override
     public void run(String... args) throws Exception {
-
+        registry = new FirebaseRegistry();
+        while(!die) {
+            synchronized (lock) {
+                lock.wait();
+            }
+        }
     }
 
     public static void main(String[] args) throws Exception {
-//        new Main();
-//        new RestServer().start();
         SpringApplication.run(Main.class);
     }
 }
