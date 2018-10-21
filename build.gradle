@@ -23,6 +23,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.lucene/lucene-core
     compile group: 'org.apache.lucene', name: 'lucene-core', version: '7.5.0'
     compile group: 'org.apache.lucene', name: 'lucene-queryparser', version: '7.5.0'
+    compile group: 'org.apache.lucene', name: 'lucene-analyzers-common', version: '7.5.0'
 
 
 }
