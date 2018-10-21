@@ -15,18 +15,18 @@ import java.io.IOException;
 public class Firebase {
     private Logger LOG = LoggerFactory.getLogger(Firebase.class);
     private FirebaseApp app;
-    private DatabaseReference ref;
+    private FirebaseDatabase ref;
 
     public Firebase() {
         app = FirebaseApp.initializeApp(getOptions());
-        ref = FirebaseDatabase.getInstance().getReference("categories");
+        ref = FirebaseDatabase.getInstance();
     }
 
     public FirebaseApp getApp() {
         return app;
     }
 
-    public DatabaseReference getReference() {
+    public FirebaseDatabase getFDatabase() {
         return ref;
     }
 
@@ -36,6 +36,7 @@ public class Firebase {
         try {
             options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(new FileInputStream(new File("/home/g174v1d_w4ng/service-acc.json"))))
+                    //.setCredentials(GoogleCredentials.fromStream(new FileInputStream(new File("service.json"))))
                     .setDatabaseUrl("https://legindus-hacktx-2018.firebaseio.com")
                     .build();
         } catch (IOException e) {
