@@ -34,8 +34,7 @@ public class Firebase {
 
         try {
             options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(new FileInputStream(new File("/home/g174v1d_w4ng/service-acc.json"))))
-                    //.setCredentials(GoogleCredentials.fromStream(new FileInputStream(new File("service.json"))))
+                    .setCredentials(GoogleCredentials.fromStream(new FileInputStream(new File(System.getProperty("os.name").toLowerCase().contains("win") ? "service.json" : "/home/g174v1d_w4ng/service-acc.json"))))
                     .setDatabaseUrl("https://legindus-hacktx-2018.firebaseio.com")
                     .build();
         } catch (IOException e) {
