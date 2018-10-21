@@ -1,4 +1,4 @@
-package com.legindus.shoplyft.firebase;
+package com.legindus.shoplyft.firebase.database;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
@@ -8,6 +8,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 public class Firebase {
@@ -33,7 +35,7 @@ public class Firebase {
 
         try {
             options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.getApplicationDefault())
+                    .setCredentials(GoogleCredentials.fromStream(new FileInputStream(new File("/home/g174v1d_w4ng/service-acc.json"))))
                     .setDatabaseUrl("https://legindus-hacktx-2018.firebaseio.com")
                     .build();
         } catch (IOException e) {

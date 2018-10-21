@@ -3,8 +3,7 @@ package com.legindus.shoplyft.firebase;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.legindus.shoplyft.firebase.Firebase;
+import com.legindus.shoplyft.firebase.database.Firebase;
 import com.legindus.shoplyftsearch.CategoryDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +35,10 @@ public class FirebaseRegistry {
         }
 
         return docs;
+    }
+
+    public Firebase getFirebase() {
+        return firebase;
     }
 
     private Future<List<CategoryDocument>> loadDocuments() {
