@@ -46,6 +46,7 @@ public class FirebaseRegistry {
                 @Override
                 public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
                     CategoryDocument document = snapshot.getValue(CategoryDocument.class);
+                    docs.add(document);
                 }
 
                 @Override
