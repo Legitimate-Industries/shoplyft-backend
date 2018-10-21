@@ -25,7 +25,8 @@ public class QueryQueue {
     }
 
     public void addQuery(Query q) {
-        queueMap.get(index.search(q.first).get(0)).add(q);
+        List<String> list = index.search(q.first);
+        queueMap.get(list.isEmpty() ? "Other" : list.get(0)).add(q);
     }
 
     public void claimQuery(String id, Employee employee) throws Exception {
