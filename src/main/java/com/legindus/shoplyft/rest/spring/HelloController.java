@@ -96,7 +96,7 @@ public class HelloController {
                 return "Could not serve file";
             }
         }
-        return userhtml;
+        return userjs;
     }
 
 }
