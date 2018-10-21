@@ -84,7 +84,7 @@ public class Index {
    }
 
     public List<String> search(String query) {
-        query = query.replaceAll("[^a-zA-Z]", "");
+        query = query.replaceAll("[^a-zA-Z\\s]", "");
         QueryParser parser = new QueryParser("keywords", analyser);
 
         try {
